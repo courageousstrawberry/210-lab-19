@@ -69,17 +69,9 @@ int main() {
         cout << "Error. Unable to open file." << endl;
     }
 
-    // Output all the movies.
-    int count = 1;
-    current = head; // Set current to point to head.
-    cout << "\nOutputting all reviews:" << endl;
-    while(current) {
-        cout << "\t> Review #" << count << ": " << current->rating << ": " << current->comment << endl;
-        count++;
-        current = current->next;
+    for (Movie movie : movies) {
+        movie.print();
     }
-    // Output the average of the reviews after running the function.
-    cout << "\t> Average: " << calcAverage(head);
 
     return 0;
 }
