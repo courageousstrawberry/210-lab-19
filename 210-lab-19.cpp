@@ -17,11 +17,21 @@ struct Node {
 class Movie {
 private:
     string title;
-    Node *review;
+    Node *reviews;
 public:
     Movie(string t, Node* r) {
         title = t;
-        review = r;
+        reviews = r;
+    }
+    void print() {
+        int count = 1;
+        cout << "\t> Title: " << title;
+        Node *current = reviews;
+        cout << "\t> Reviews:" << endl;
+        while(current) {
+            cout << count << ". " << current->rating << "/5.0, " << current->comment << endl;
+            count++;
+        }
     }
 };
 
@@ -58,14 +68,8 @@ int main() {
     else {
         cout << "Error. Unable to open file." << endl;
     }
-    cout << "Enter review comments: ";
-    getline(cin, current->comment);
-    current->next = nullptr;
 
-
-    addToHead(head, current);
-
-    // Once user enters no, output all the reviews.
+    // Output all the movies.
     int count = 1;
     current = head; // Set current to point to head.
     cout << "\nOutputting all reviews:" << endl;
