@@ -42,8 +42,10 @@ double calcAverage(Node *&);
 int main() {
     // Initialize the head and current nodes.
     Node *head = nullptr;
-    Node *current = nullptr;
+    Node *current = new Node;
     int count = 0;
+
+    srand(time(0));
 
     vector<Movie> movies;
 
@@ -51,8 +53,6 @@ int main() {
     ifstream file("comments.txt");
     if (file.is_open()) {
         while(getline(file, current->comment)){
-            current = new Node;
-            srand(time(0));
             current->rating = 1.0 + ((rand() % 5001) / 1000.0); 
             current->next = nullptr;
             addToHead(head, current);
@@ -60,10 +60,19 @@ int main() {
             if(count == 3){
                 Movie movie("Movie 1", head);
                 movies.push_back(movie);
+
+                Node *temp;
+                while (head != nullptr){
+                    temp = head;
+                    head = head->next;
+                    delete temp;
+                }
                 head = nullptr;
                 count = 0;
             }
+            current = new Node;
         }
+        delete current;
     }
     else {
         cout << "Error. Unable to open file." << endl;
