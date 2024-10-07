@@ -1,5 +1,6 @@
 #include <iostream>
 #include <limits>
+#include <vector>
 
 using namespace std;
 
@@ -8,6 +9,13 @@ struct Node {
     double rating;
     string comment;
     Node* next;
+};
+
+class Movie {
+private:
+    string title;
+    Node *review;
+public:
 };
 
 // Function declarations.
