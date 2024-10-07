@@ -34,11 +34,14 @@ int main() {
 
     current = new Node;
 
-    // fix
-    srand(time(0));
-    current->rating = rand() % 5; 
-
     // Prompt user for movie review.
+    ifstream file("comments.txt");
+    if (file.is_open()) {
+        while(getline(file, current->comment))
+    }
+    else {
+        cout << "Error. Unable to open file." << endl;
+    }
     cout << "Enter review comments: ";
     getline(cin, current->comment);
     current->next = nullptr;
