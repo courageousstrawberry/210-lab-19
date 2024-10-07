@@ -25,11 +25,11 @@ public:
     }
     void printR() {
         int count = 1;
-        cout << "\t> Title: " << title << endl;
+        cout << "Title: " << title << endl;
         Node *current = reviews;
         cout << "\t> Reviews:" << endl;
         while(current) {
-            cout << count << ". " << current->rating << "/5.0, " << current->comment << endl;
+            cout << "\t\t" << count << ". " << current->rating << "/5.0, " << current->comment << endl;
             count++;
             current = current->next;
         }
@@ -55,10 +55,9 @@ int main() {
     if (file.is_open()) {
         string line;
         while(getline(file, line)){
-            cout << "read line: " << line << endl;
             Node *current = new Node;
             current->comment = line;
-            current->rating = 1.0 + ((rand() % 5001) / 1000.0); 
+            current->rating = 1.0 + ((rand() % 41) / 10.0); 
             current->next = nullptr;
             addToHead(head, current);
             count++;
@@ -69,8 +68,12 @@ int main() {
                 movieCount++;
 
                 for (int i = 0; i < 3; i++){
-                    splitHead = splitHead->next;
+                    if (splitHead != nullptr){
+                        splitHead = splitHead->next;
+                    }
                 }
+
+                head = splitHead;
                 count = 0;
             }
         }
