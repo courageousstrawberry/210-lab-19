@@ -26,18 +26,25 @@ void addToHead(Node *&, Node *);
 double calcAverage(Node *&);
 
 int main() {
-    int choice = 0;
-    char repeat = 'Y';
     // Initialize the head and current nodes.
     Node *head = nullptr;
     Node *current = nullptr;
-
-    current = new Node;
+    int count = 0;
 
     // Prompt user for movie review.
     ifstream file("comments.txt");
     if (file.is_open()) {
-        while(getline(file, current->comment))
+        while(getline(file, current->comment)){
+            current = new Node;
+            srand(time(0));
+            current->rating = 1.0 + ((rand() % 5001) / 1000.0); 
+            current->next = nullptr;
+            addToHead(head, current);
+            count++;
+            if(count == 3){
+
+            }
+        }
     }
     else {
         cout << "Error. Unable to open file." << endl;
