@@ -23,27 +23,28 @@ public:
         title = t;
         reviews = r;
     }
-    void print() {
+    void printR() {
         int count = 1;
-        cout << "\t> Title: " << title;
+        cout << "\t> Title: " << title << endl;
         Node *current = reviews;
         cout << "\t> Reviews:" << endl;
         while(current) {
             cout << count << ". " << current->rating << "/5.0, " << current->comment << endl;
             count++;
+            current = current->next;
         }
     }
 };
 
 // Function declarations.
 void addToHead(Node *&, Node *);
-double calcAverage(Node *&);
 
 int main() {
     // Initialize the head and current nodes.
     Node *head = nullptr;
-    Node *current = new Node;
+    Node *splitHead = nullptr;
     int count = 0;
+    int movieCount = 1;
 
     srand(time(0));
 
@@ -52,34 +53,35 @@ int main() {
     // Prompt user for movie review.
     ifstream file("comments.txt");
     if (file.is_open()) {
-        while(getline(file, current->comment)){
+        string line;
+        while(getline(file, line)){
+            cout << "read line: " << line << endl;
+            Node *current = new Node;
+            current->comment = line;
             current->rating = 1.0 + ((rand() % 5001) / 1000.0); 
             current->next = nullptr;
             addToHead(head, current);
             count++;
             if(count == 3){
-                Movie movie("Movie 1", head);
+                splitHead = head;
+                Movie movie("Movie " + to_string(movieCount), splitHead);
                 movies.push_back(movie);
+                movieCount++;
 
-                Node *temp;
-                while (head != nullptr){
-                    temp = head;
-                    head = head->next;
-                    delete temp;
+                for (int i = 0; i < 3; i++){
+                    splitHead = splitHead->next;
                 }
-                head = nullptr;
                 count = 0;
             }
-            current = new Node;
         }
-        delete current;
+        file.close();
     }
     else {
         cout << "Error. Unable to open file." << endl;
     }
 
     for (Movie movie : movies) {
-        movie.print();
+        movie.printR();
     }
 
     return 0;
@@ -97,21 +99,4 @@ void addToHead(Node *&head, Node *add){
         // Update the head to point to the new pointer.
         head = add;
     }
-}
-
-// Function to calculate the average ratings.
-double calcAverage(Node *&head) {
-    Node *current = head;
-    double total = 0;
-    int count = 0;
-    // Loop through each value of the linked list.
-    while(current) {
-        // Keep track of the total ratings.
-        total += current->rating;
-        // Keep track of the number of ratings.
-        count++;
-        current = current->next;
-    }
-    // Return the average.
-    return (total/count);
 }
