@@ -19,6 +19,10 @@ private:
     string title;
     Node *review;
 public:
+    Movie(string t, Node* r) {
+        title = t;
+        review = r;
+    }
 };
 
 // Function declarations.
@@ -31,6 +35,8 @@ int main() {
     Node *current = nullptr;
     int count = 0;
 
+    vector<Movie> movies;
+
     // Prompt user for movie review.
     ifstream file("comments.txt");
     if (file.is_open()) {
@@ -42,7 +48,10 @@ int main() {
             addToHead(head, current);
             count++;
             if(count == 3){
-
+                Movie movie("Movie 1", head);
+                movies.push_back(movie);
+                head = nullptr;
+                count = 0;
             }
         }
     }
